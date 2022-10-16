@@ -25,13 +25,17 @@ const columns = [
 ];
 let rows = [];
 
-function Items() {
+function Items(props) {
+  
   const [open, setOpen] = useState(false);
+  
   const [data, setData] = useState(field);
   const [items, setItems] = useState();
 
   console.log(data);
+
   useEffect(() => {
+    
     axios.get("http://localhost:3001/items").then((res) => {
       setItems(res.data);
       console.log(res.data.length);
@@ -51,6 +55,7 @@ function Items() {
       );
       //console.log(clean);
       rows = clean;
+      // props.onSubmit(rows);
     });
   }, []);
 
@@ -68,6 +73,8 @@ function Items() {
       [name]: value,
     });
   };
+
+  //console.log(items);
 
   return (
     <>
@@ -90,7 +97,21 @@ function Items() {
                   fontFamily: "cursive",
                 }}
               >
-                Home
+                home
+              </Link>
+              <Link
+                to="/dailyUpdate"
+                style={{
+                  textDecoration: "none",
+                  textAlign: "center",
+                  fontSize: "20px",
+                  marginTop: "4px",
+                  marginLeft: "8px",
+                  color: "whitesmoke",
+                  fontFamily: "cursive",
+                }}
+              >
+                update
               </Link>
             </div>
             <div>
@@ -101,6 +122,7 @@ function Items() {
           </Toolbar>
         </AppBar>
       </div>
+      
       <div style={{ height: 650, width: "100%" }}>
         <DataGrid
           rows={rows}
@@ -110,7 +132,6 @@ function Items() {
           checkboxSelection
         />
       </div>
-
       <Dialog
         maxWidth="xl"
         open={open}
